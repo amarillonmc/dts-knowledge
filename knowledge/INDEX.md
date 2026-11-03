@@ -12,3 +12,5 @@
 
 | Project | Index |
 | --- | --- |
+| dts-denpa | [Open](projects/dts-denpa/INDEX.md) |
+| phpdts | [Open](projects/phpdts/INDEX.md) |
