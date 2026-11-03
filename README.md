@@ -1,82 +1,33 @@
-# Da'at
+# DTS Team Knowledge Repository（DTS 团队知识仓库）
 
-Da'at is a Git-based framework for recording project work and maintaining
-reusable technical knowledge. It combines indexed Markdown, explicit working
-rules, copyable templates, and small supporting tools so that a repository can
-preserve both what happened and what can be used again.
+《常磐大逃杀》(DTS) 团队的协作知识仓库：worklog（谁实际改了什么）+ 可复用知识（怎么改、为什么）。基于 [Da'at](https://github.com/purerosefallen/da-at) 框架（MIT），按 DTS 需要改造：双语内容、pull 触发式日志、表设定安全边界。
 
-## Why Da'at?
+## 为什么存在
 
-Da'at takes its name from the Hebrew word for "knowledge" in the Kabbalistic
-tradition. In that tradition, Da'at connects understanding with lived experience
-and practice. The name reflects this project's purpose: turning recorded work
-into knowledge that can guide future work. See
-[The Sefirot by Nissan Dovid Dubov](https://www.chabad.org/library/article_cdo/aid/361885/jewish/The-Sefirot.htm)
-for the background behind this connection.
+多人多 agent 协作（Nemo / NazoBlaster / 开发机 LLM / Hermes），改动只以 commit 形式落盘，缺少"实际落地了什么"的团队可见日志。本仓库按项目记录 phpdts（常磐版）、dts-denpa（电波版）、amarillonmc.github.io（设定站）的实际改动与可复用知识。
 
 ## Repository Structure
 
-- [AGENTS.md](AGENTS.md) defines the required pull, research, logging, indexing,
-  commit, and push workflow.
-- [UPDATE_KNOWLEDGE.md](UPDATE_KNOWLEDGE.md) defines how knowledge is created,
-  organized, updated, and migrated into reusable tools.
-- [worklogs/](worklogs/INDEX.md) records tasks that make substantive modifications
-  or for which the user explicitly requests logging. Knowledge changes always
-  require a worklog.
-- [knowledge/](knowledge/INDEX.md) contains curated knowledge and scope-local
-  `tools/` projects. Updates require an explicit request or a bounded reuse-driven
-  migration.
-- [ref-repo.sh](ref-repo.sh) creates shallow reference checkouts under the ignored
-  `ref-repos/` cache, with refresh and expiration rules.
-- `_example/` directories under dynamic worklog and project-knowledge roots
-  provide complete copyable structures without representing real data.
-- [LICENSE](LICENSE) contains the framework's MIT license.
+- `worklogs/` — 按成员/项目/时间戳记录的实际改动日志
+- `knowledge/` — 沉淀后的可复用知识（架构 / 流程 / 运维 / 排障 / 决策 + 小工具）
+- `AGENTS.md` — 本仓库的 agent 工作流与契约
+- `UPDATE_KNOWLEDGE.md` — 知识创建、组织、更新的唯一规则
+- `ref-repo.sh` — 外部仓库浅层参考 checkout 工具
+- `_example/` — 模板目录，不代表真实数据
+
+## 语言与安全
+
+- 文件名英文（lowercase kebab-case），文档内容中英双语皆可。
+- **表设定安全铁则**：本仓库可能公开，内容只写到玩家可见层面；里设定细节留在 Nemo 的私有知识仓库与 V4BB，禁止入此库。
 
 ## Getting Started
 
-1. Use Da'at as the starting point for your own worklog and knowledge repository.
-   Keep the framework's history if you want to merge future updates.
-2. Configure your instance's `origin` to point to its own repository and configure
-   `git user.name` before recording work.
-3. Read [AGENTS.md](AGENTS.md) before starting a task. Follow its knowledge-reading
-   workflow and create worklogs only when its logging rules require them.
-4. For an explicitly requested knowledge change or the permitted reuse-driven
-   migration, also follow [UPDATE_KNOWLEDGE.md](UPDATE_KNOWLEDGE.md).
+写一条 worklog 或创建知识的完整规则见 `AGENTS.md` 与 `UPDATE_KNOWLEDGE.md`。参考 checkout：
 
-Keep real worklogs, curated knowledge, and instance-specific tools in your own
-repository. The upstream Da'at repository contains only the framework and its
-reserved examples.
-
-For a reference checkout, run:
-
-```sh
+```shell
 ./ref-repo.sh <repo-url> <ref>
 ```
 
-Use `--immutable` for tags. Full commit hashes are automatically immutable;
-branches are refreshed. Reference checkouts are disposable and must not be
-committed.
+## 上游
 
-Run the existing helper regression test with:
-
-```sh
-bash tests/ref-repo.test.sh
-```
-
-## Repositories
-
-- [Moenext](https://code.moenext.com/nanahira/da-at)
-- [GitHub](https://github.com/purerosefallen/da-at)
-
-Both repositories publish the Da'at framework on the `master` branch.
-
-## License
-
-The Da'at framework is available under the [MIT License](LICENSE), copyright
-2026 purerosefallen. This covers the framework documentation, instruction files,
-reserved examples, shared scripts, and tests supplied by this upstream project.
-
-Worklogs, knowledge articles, and instance-specific tools added by downstream
-repositories are outside this license grant. Merging Da'at does not relicense
-that content; consult the applicable owners and license notices. Existing
-third-party license notices must be retained.
+框架基于 [Da'at](https://github.com/purerosefallen/da-at)，MIT License。框架部分版权归上游，本仓库 DTS 内容归团队所有。

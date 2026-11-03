@@ -1,5 +1,11 @@
 # Knowledge Update Instructions
 
+## Repository Language and Safety Boundary（双语与安全边界）
+
+- 文件名、目录名、tool 目录名：英文、lowercase kebab-case；代码与命令保持英文。
+- 文档内容、标题、索引条目：中文、英文或双语皆可。
+- **表设定安全铁则**：本仓库可能公开，每份 knowledge 文档只写玩家可见层面的事实；里设定细节禁止入此库（详见 AGENTS.md）。写入前过一遍自检：玩家看到也不会损失任何东西。
+
 ## Trigger
 
 Use this file when the user explicitly requests knowledge organization,
@@ -247,7 +253,7 @@ repositories and link supporting knowledge and worklogs whenever possible.
 6. Update the topic, scope, and root indexes affected by the change.
 7. Link the required worklog for the knowledge-update task.
 8. Verify relative links, full commit hashes, immutable flags, UTC+8 timestamps,
-   and English content.
+   and bilingual/表设定-safe content.
 
 When replacing obsolete knowledge, preserve useful history through Git and link
 the replacement page from any document that must remain for context.

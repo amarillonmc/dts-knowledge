@@ -8,3 +8,4 @@
 
 | Member | Index |
 | --- | --- |
+| `hermes` | [Open](members/hermes/INDEX.md) |

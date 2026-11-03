@@ -1,119 +1,70 @@
-# Team Repository Instructions
+# Team Repository Instructions（DTS 团队知识仓库）
 
-## Repository Language
+《常磐大逃杀》(DTS) 团队的协作知识仓库，基于 [Da'at 框架](https://github.com/purerosefallen/da-at)（MIT）改造。本文件是所有协作 agent（Hermes、开发机 LLM 等）在本仓库内必须遵守的规则。
 
-Use English for every committed filename, directory name, heading, index entry,
-worklog, and knowledge document in this repository.
+## Repository Language（双语规则）
 
-## Required Task Workflow
+- 文件名、目录名、时间戳文件名：英文、lowercase kebab-case（git 安全）。
+- 文档内容、标题、索引条目、worklog 正文：中文、英文或双语皆可。
+- Member 与 Project 名按下方命名规则。
+- **内容安全边界（铁则）**：本仓库存放于 GitHub，可能公开。全部内容必须**表设定安全**——只写玩家可见层面的事实（表设定 = GitHub + bbs + phpdts 玩家可见内容）。**严禁**写入里设定（V4BB 层设定、种火语、时空帧体系、最高机密等）的名词、解释与因果。涉及里设定的改动只以中性技术层面记录（改了哪些文件、规格名、游戏内表现），细节归 Nemo 的私有知识仓库（skill knowledge/）或 V4BB。
+  - 一句话自检：**玩家看到这条日志/知识也不会损失任何东西**——不通过就改写或删掉。
 
-Every task must follow this sequence unless the user explicitly narrows the
-delivery for that task:
+## Required Task Workflow（pull 触发式）
 
-1. Enter this repository and run `git pull --no-rebase`.
-2. Determine the member and affected project names.
-3. Read relevant worklogs and knowledge before starting project work.
-4. Perform the actual project work.
-5. Determine whether the task requires a worklog under the rules below.
-6. When a worklog is required, return to this repository and run
-   `git pull --no-rebase` again.
-7. Write one worklog for every affected project and update all affected worklog
-   indexes.
-8. Commit the repository-management changes and push them. If the push is
-   rejected because the remote advanced, run `git pull --no-rebase`, resolve
-   the merge, and push again.
+本仓库的主要写入时机 = **拉取游戏仓库并确认实际改动**。触发条件：
 
-Steps 6 through 8 are conditional when no worklog or other repository-management
-change is required.
+- Nemo 让我 pull phpdts（或 dts-denpa / amarillonmc.github.io）；或
+- 我自己按工作规则 pull 上述仓库（如「凡涉及实现现状的核对先 git pull」）；或
+- Nemo 明确要求写一条 worklog。
 
-Write a worklog when the user explicitly requests one or when the task makes a
-substantive modification. A substantive modification changes project files,
-configuration, data, a deployed or external system, or knowledge content. Pure
-questions, research, inspection, or diagnosis without such a modification do
-not require a worklog.
+流程：
 
-Creating, editing, reorganizing, or deleting knowledge is always a substantive
-modification and always requires a worklog. If a task makes a substantive
-modification before it fails or becomes blocked, record the work that was
-performed. Do not create a worklog solely because a task was read-only, failed,
-became blocked, or produced no project changes.
-
-Do not create, edit, reorganize, or delete knowledge content unless the user
-explicitly requests knowledge organization. The only standing exception permits
-editing an existing knowledge document for reuse-driven migration when all
-three conditions below hold:
-
-- The knowledge document is referenced for the current task.
-- That knowledge has no corresponding tool project.
-- Its logic has reusable value and can reasonably be migrated into a tool.
-
-This exception permits only editing the referenced existing knowledge and
-adding its corresponding tool files and required index entries. Creating new
-knowledge documents, reorganizing knowledge, and deleting knowledge still
-require an explicit user request in every case.
-
-Follow [UPDATE_KNOWLEDGE.md](UPDATE_KNOWLEDGE.md) for an explicit request or this
-single bounded edit exception.
+1. pull 对应游戏仓库，记录 pull 前/后的 commit 范围（无新 commit = no-change，不写日志）。
+2. 用 `git log <old>..<new>` / `git diff --stat` 确认**实际落地了什么**（不写推测、不写未发生的计划）。
+3. 读本仓库相关 worklog 与 knowledge。
+4. 每个受影响项目写一条 worklog，更新所有受影响 INDEX。
+5. commit。remote 未配置时只 commit 不 push（Nemo 手动同步，或由他配置 remote 后再 push）。
 
 ## Fixed File Contracts
 
-The repository root contains these fixed files:
+仓库根目录固定文件：
 
-- `README.md`: repository title, purpose, content map, and links to the two
-  instruction files.
-- `AGENTS.md`: mandatory task workflow, worklog contracts, knowledge-reading
-  workflow, reference-repository usage, and delivery checks.
-- `UPDATE_KNOWLEDGE.md`: the only instructions for creating, organizing, or
-  updating knowledge.
-- `LICENSE`: the MIT license for the Da'at framework; `README.md` describes its
-  scope and the treatment of downstream content.
-- `.gitignore`: excludes the complete `/ref-repos/` cache.
-- `ref-repo.sh`: materializes a shallow reference checkout and prints its
-  absolute path.
-- `_example/`: the reserved template directory name under dynamic roots. Never
-  use `_example` as a real member or project, and never treat its contents as an
-  operational record.
+- `README.md`：仓库标题、用途、内容地图与两份规则文件的链接。
+- `AGENTS.md`：任务工作流、worklog 契约、知识读取工作流、参考仓库用法与交付检查。
+- `UPDATE_KNOWLEDGE.md`：创建、组织、更新知识的唯一规则。
+- `LICENSE`：Da'at 框架的 MIT 协议；README 说明其范围与下游内容归属。
+- `.gitignore`：排除完整的 `/ref-repos/` 缓存。
+- `ref-repo.sh`：物化浅层参考 checkout 并输出其绝对路径。
+- `_example/`：动态根目录下的保留模板目录名。绝不把 `_example` 用作真实成员/项目名，绝不视其内容为运营记录。
 
-Do not add another root-level process document when one of these files can hold
-the rule.
+当上述文件之一能承载某条规则时，不新增根级流程文档。
 
 ## Member and Project Names
 
-Read the member name from `git config user.name`, trim surrounding whitespace,
-and replace `/` with `-` so it remains one path component. If the result is
-empty, stop and ask the user to configure it before writing a worklog.
+Member 名取自 `git config user.name`，trim 空白、`/` 替换为 `-`，保持单一路径段。为空则先配置身份再写 worklog。
 
-Determine each affected project independently:
+本仓库预注册的 DTS 规范项目名（优先于 origin 推导）：
 
-- For a Git repository with a parseable `origin` URL, use
-  `<namespace>_<repository>`. Remove a trailing `.git`, join nested namespace
-  components with `-`, and replace path-unsafe characters with `-`.
-- For a directory outside a Git repository, use `nongit-<directory-name>`.
-- For a Git repository whose namespace and repository cannot be determined,
-  use `misc`.
+- `phpdts` — 常磐版游戏源码（当前分支 `nouveau`）
+- `dts-denpa` — 电波版（当前分支 `Unstable`）
+- `amarillonmc-github-io` — 设定站
+- `dts-knowledge` — 本仓库自身
 
-For example, `git@git.example.com:team/platform/service.git` becomes
-`team-platform_service`.
+其它仓库按上游规则推导：`<namespace>_<repository>`（去 `.git`、嵌套 namespace 以 `-` 连接、路径不安全字符替换为 `-`）；仓库外目录 = `nongit-<directory-name>`；无法判定 = `misc`。
 
 ## Creating Worklog Directories
 
-Never assemble a new member or project tree manually.
+绝不手工拼装 member / project 目录树。
 
-- If `worklogs/members/<member>/` does not exist, copy
-  `worklogs/members/_example/` to it. Replace `_example` in the copied member
-  `INDEX.md` with the real member name, keep the copied `projects/_example/`
-  template, and add the member to `worklogs/INDEX.md`.
-- If `worklogs/members/<member>/projects/<project>/` does not exist, copy that
-  member's `projects/_example/` to it. Replace `_example` values, rename the
-  example log to the current task timestamp, replace all example log content,
-  and add the project to the member index.
+- `worklogs/members/<member>/` 不存在时，复制 `worklogs/members/_example/`。将复制出的 member `INDEX.md` 中的 `_example` 替换为真实成员名，保留复制出的 `projects/_example/` 模板，并把成员加入 `worklogs/INDEX.md`。
+- `worklogs/members/<member>/projects/<project>/` 不存在时，复制该成员的 `projects/_example/`。替换 `_example` 值，把示例日志重命名为本次任务时间戳，替换全部示例日志内容，并把项目加入成员索引。
 
-Do not modify the source `_example` trees while instantiating them. Do not list
-`_example` in a real member or project table.
+实例化时不得改动源 `_example` 树，不得把 `_example` 列入真实成员/项目表。
 
 ## Worklog Tree and File Contracts
 
-The worklog tree is:
+Worklog 树：
 
 ```text
 worklogs/
@@ -132,17 +83,17 @@ worklogs/
             <timestamp>.md
 ```
 
-Generate `<timestamp>` as `YYYYMMDD-HHmmss` in UTC+8 with:
+`<timestamp>` 以 UTC+8 生成：
 
 ```sh
 TZ=Asia/Shanghai date '+%Y%m%d-%H%M%S'
 ```
 
-If the target filename exists, wait for the next second. Never overwrite a log.
+目标文件名已存在则等下一秒，绝不覆盖日志。
 
 ### Root Worklog Index
 
-`worklogs/INDEX.md` must contain exactly one title followed by a member table:
+`worklogs/INDEX.md` 必须恰含一个标题与成员表：
 
 ```markdown
 # Worklog Members
@@ -158,12 +109,11 @@ If the target filename exists, wait for the next second. Never overwrite a log.
 | `<member>` | [Open](members/<member>/INDEX.md) |
 ```
 
-Sort real members lexicographically by directory name. Do not add `_example` to
-the member table.
+真实成员按目录名字典序排列，`_example` 不入成员表。
 
 ### Member Index
 
-`worklogs/members/<member>/INDEX.md` must use:
+`worklogs/members/<member>/INDEX.md`：
 
 ```markdown
 # <member> Projects
@@ -179,15 +129,11 @@ the member table.
 | `<project>` | [Open](projects/<project>/INDEX.md) |
 ```
 
-Sort real projects lexicographically by directory name. Do not add `_example`
-to the project table.
-
-The reserved `members/_example/INDEX.md` follows this contract and links its
-reserved `projects/_example/` project as a template, not as a real project row.
+真实项目按目录名字典序排列，`_example` 不入项目表。
 
 ### Project Index
 
-`worklogs/members/<member>/projects/<project>/INDEX.md` must use:
+`worklogs/members/<member>/projects/<project>/INDEX.md`：
 
 ```markdown
 # <project> Worklogs
@@ -197,13 +143,11 @@ reserved `projects/_example/` project as a template, not as a real project row.
 | `YYYYMMDD-HHmmss` | `<status>` | <one-line summary> | [Open](logs/<timestamp>.md) |
 ```
 
-Sort rows in reverse chronological order. Status is one of `completed`,
-`partial`, `blocked`, `failed`, or `no-change`.
+按时间倒序排列。Status 为 `completed`、`partial`、`blocked`、`failed`、`no-change` 之一。
 
 ### Worklog Document
 
-Every `logs/<timestamp>.md` must use all of these headings. Use `None` when a
-section has no entries.
+每条 `logs/<timestamp>.md` 必须包含以下全部标题（无条目写 `None`）：
 
 ```markdown
 # <Task title>
@@ -250,75 +194,48 @@ section has no entries.
 - [<project and timestamp>](<relative path>)
 ```
 
-Use one log per affected project. When a task spans projects, every produced
-log must link to all sibling logs under `Related Worklogs`. Use relative
-Markdown links for repository-local documents. Preserve historical logs;
-change one only to correct inaccurate content or a broken link.
+每个受影响项目一条日志；跨项目任务的所有日志须在 `Related Worklogs` 互链。仓库内文档用相对 Markdown 链接。保留历史日志，仅可修正不准确内容或坏链。
 
 ## Reading Knowledge
 
-Knowledge has two scopes:
+知识分两个 scope：`knowledge/common/`（跨项目通用）与 `knowledge/projects/<project>/`（项目专属）。
 
-- `knowledge/common/` for material shared across projects;
-- `knowledge/projects/<project>/` for project-specific material.
+阅读顺序：
 
-Read knowledge in this order:
+1. 打开 `knowledge/INDEX.md` 定位 scope。
+2. 打开 scope 的 `INDEX.md` 选择主题。
+3. 打开主题的 `INDEX.md` 定位文档。
+4. 阅读所选文档，跟随其关联知识与支撑 worklog 链接。
+5. 需要仓库源码时，用 `ref-repo.sh` 物化并记录 URL、ref、resolved commit 与不可变状态。
 
-1. Open `knowledge/INDEX.md` to locate the scope.
-2. Open the scope's `INDEX.md` to select a topic.
-3. Open the topic's `INDEX.md` to locate documents.
-4. Read the selected document and follow its related-knowledge and supporting
-   worklog links when they affect the task.
-5. For a repository source, use its URL, ref, resolved commit, and immutable
-   status. Materialize it with `ref-repo.sh` when local source inspection is
-   needed.
-
-Do not infer current behavior from an old mutable branch reference. Refresh the
-branch with `ref-repo.sh` before relying on it.
+不得凭旧的可变分支引用推断当前行为；依赖前先用 `ref-repo.sh` 刷新。
 
 ### Reuse-Driven Engineering Migration
 
-Only when the current task references a knowledge document, that knowledge has
-no corresponding tool project, and its logic has reusable value, migrate it using
-[Reuse-driven migration](UPDATE_KNOWLEDGE.md#reuse-driven-migration). This is a
-standing authorization for that bounded knowledge update and its required
-worklog; a task explicitly restricted to read-only work takes precedence.
+仅当当前任务引用了某知识文档、该知识无对应 tool 项目、且其逻辑有可复用价值时，按 [Reuse-driven migration](UPDATE_KNOWLEDGE.md#reuse-driven-migration) 迁移。这是对该有界知识更新及其必需 worklog 的常设授权；明确限定只读的任务优先。
 
-If a corresponding tool project already exists, do not silently migrate or
-rewrite its knowledge. Such a knowledge migration requires an explicit user
-request. Use the existing engineered project as it stands; do not redesign,
-repackage, move, or refactor it merely to improve its engineering or to match a
-newer template. Do not expand the authorized operation while migrating its
-procedure. An unrelated tool or an empty `tools/` directory does not trigger
-this restriction.
+对应 tool 项目已存在时，不得静默迁移或重写其知识——此类知识迁移需 Nemo 明确要求。按现状使用既有工程化项目，不得仅为改进工程性或对齐新模板而重设计/重打包/移动/重构。不得在迁移过程中扩大授权操作。无关 tool 或空的 `tools/` 目录不触发此限制。
 
 ## Reference Repositories
-
-Use:
 
 ```sh
 ./ref-repo.sh [--immutable] <repo-url> <ref>
 ```
 
-- Use `--immutable` for tags.
-- Full 40- or 64-character commit hashes are automatically immutable.
-- Omit `--immutable` for branches and other refs that can move.
-- Treat returned checkouts as disposable, read-only reference material.
-- Never commit anything under `ref-repos/`.
-
-The helper prints one absolute checkout path on stdout. Diagnostics go to
-stderr. Cite the original URL and resolved commit, never the cache path.
+- tag 用 `--immutable`；完整 commit hash 自动视为不可变；分支等可变 ref 省略该参数。
+- 返回的 checkout 视为一次性只读参考材料；绝不把 `ref-repos/` 下内容提交入库。
+- 引用时注明原始 URL 与 resolved commit，不引用缓存路径。
 
 ## Delivery Checks
 
-Before committing, verify that:
+提交前核对：
 
-- all new repository content is English;
-- every new file follows its contract above or in `UPDATE_KNOWLEDGE.md`;
-- all affected indexes contain valid relative links;
-- cross-project logs link to one another;
-- no `ref-repos/` content is tracked;
-- each worklog records the validation actually performed.
+- 新文件名英文 kebab-case；内容可中文（双语合规）；
+- **表设定安全自检通过**（里设定零泄漏）；
+- 所有新文件符合本文或 `UPDATE_KNOWLEDGE.md` 的契约；
+- 受影响 INDEX 的相对链接有效；
+- 跨项目日志互相链接；
+- 无 `ref-repos/` 内容被跟踪；
+- 每条 worklog 记录了实际执行的验证。
 
-Commit only intended repository-management changes. Do not include unrelated
-project changes.
+只提交本次仓库管理相关的改动，不混入无关的项目改动。
