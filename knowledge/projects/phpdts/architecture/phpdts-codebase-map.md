@@ -30,6 +30,7 @@ phpdts（常磐大逃杀）是过程式 PHP 网页游戏：PHP 7.4 兼容语法�
 ### 模板
 - 源文件 `templates/*/*.htm`，语法 `{$name}` / `<!--{if ...}-->` / `<!--{loop ...}-->` / `{template ...}`；由 `template()` + `include/template.func.php` 编译到 `gamedata/templates/`。
 - `nouveau` 缺失的模板回退 `default`；只改源模板，不手改编译产物。
+- 帮助页生成的合成表与掉落表**按模式分别缓存**到 `gamedata/templates/mixhelp_<cfg>.htm`、`itemhelp_<cfg>.htm`，不覆写受版本控制的 `templates/default/mixhelp.htm`；`get_item_npcdrop()` 按当前 `$gamecfg` 读取并分模式缓存。改帮助渲染时不要退回「渲染即写公共模板」的写法，那会在异色/时光重现房间之间造成缓存污染。
 
 ### 数据库
 - `include/db_*.class.php`，实际驱动由部署配置选择；`$tablepre` 是房间前缀、`$gtablepre` 是公共前缀。
@@ -55,6 +56,7 @@ phpdts（常磐大逃杀）是过程式 PHP 网页游戏：PHP 7.4 兼容语法�
 ### Supporting Worklogs
 
 - [phpdts 首批知识文档创建](../../../../worklogs/members/hermes/projects/phpdts/logs/20261103-002608.md)
+- [游戏内帮助重写与 AI 机体后勤修复](../../../../worklogs/members/hermes/projects/phpdts/logs/20261118-225346.md)
 
 ### Repositories
 
