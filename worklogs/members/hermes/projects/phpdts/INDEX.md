@@ -2,6 +2,7 @@
 
 | Timestamp | Status | Summary | Log |
 | --- | --- | --- | --- |
+| `20261119-211710` | `completed` | 新增移动平台专属模板 `templates/mobile`（Dark Aero·TEMPLATEID=3）与手机版／原版双向切换：UA／Client Hints／iPadOS 识别、`dts_ui_mode` Cookie、账户 u_templateid=3、HUD＋拇指坞／平板双栏与全站导航；29ab8f5→96433f2，8 个变更 PHP 与 5 个 JS 语法检查、mobile 模板 27 PASS、ending UI 8、account UI 3（含 mobile）及 5 份回归通过；laika 1 条既有断言在改动前后同样失败，未实机／站点联调。 | [Open](logs/20261119-211710.md) |
 | `20261118-225346` | `completed` | 游戏内帮助全面重写与 AI 机体战后勤务修复拉取复核：帮助页按当前大房间重排并新增第 23 节 RuleSet 指南（6 异色 + 5 时光重现房间），四条结局路线正式入册；合成表与掉落表改为按模式缓存到 gamedata/templates 不再覆写受控模板；AI 机体改用 action 判定交战、战后可切换/部署并保留击杀来源；21d1e2f→29ab8f5，11 个变更 PHP 语法检查、9 个模板隔离编译与 7 份回归通过，laika 1 条既有断言在改动前后同样失败，未站点联调。 | [Open](logs/20261118-225346.md) |
 | `20261117-000221` | `completed` | 四项 bugfix 拉取复核：元素大师已消耗纸条仍解锁歌词、头衔击杀成就改读 nicksrev、幸存者名单与下注排除 AI 分体、死亡升级不回血；35c3ba9→21d1e2f，7 个变更 PHP 语法检查与 6 份回归通过，ai93 需隔离副本绕开本机 PHP 7.4 假 DB 多字节坑（469 PASS），未站点联调。 | [Open](logs/20261117-000221.md) |
 | `20261115-003759` | `completed` | 动物大排档七名 type 36 成员改为开局常驻、跨轮复用，QD1—QD7 公共任务进入侧栏 QUEST 追踪，游戏解除钥匙统一由 item_ending 结算；4442ce1→35c3ba9 复核，11 个变更 PHP 语法检查与 13 份回归（14 次运行）通过，未站点联调。 | [Open](logs/20261115-003759.md) |
